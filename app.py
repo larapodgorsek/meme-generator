@@ -19,9 +19,9 @@ def generate_meme():
         image = Image.open(image_path)
         draw = ImageDraw.Draw(image)
 
-        font_size = max(40, image.width // 5)
+        font_size = max(20, image.width // 10)
         try:
-            font_path = "arial.ttf"  
+            font_path = "fonts/ARIAL.TTF"  
             font = ImageFont.truetype(font_path, size=font_size)
         except:
             font = ImageFont.load_default()
