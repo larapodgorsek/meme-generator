@@ -14,20 +14,19 @@ def generate_meme():
     image_file = request.files.get('image')
 
     if image_file:
-        # Save uploaded image
         image_path = f"static/uploads/{image_file.filename}"
         image_file.save(image_path)
         image = Image.open(image_path)
         draw = ImageDraw.Draw(image)
 
-        font_size = max(20, image.width // 10)
+        font_size = max(40, image.width // 5)
         try:
             font_path = "arial.ttf"  
             font = ImageFont.truetype(font_path, size=font_size)
         except:
             font = ImageFont.load_default()
 
-        margin = 10  # horizontal margin
+        margin = 10  
 
         def wrap_text(text, font, max_width):
             words = text.split()
