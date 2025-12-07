@@ -11,29 +11,30 @@ Tehnologije:
 
 Namestitev in zagon
 
-    Kloniraj repozitorij:
+Kloniraj repozitorij:
 
         git clone https://github.com/larapodgorsek/Meme-Generator.git
 
         cd meme-generator
 
 
-    Zagon preko Dockerja:
+Zagon preko Dockerja:
 
         docker build -t meme-generator .
 
         docker run -p 5000:5000 meme-generator
 
 
-    Odpri aplikacijo v brskalniku: http://127.0.0.1:5000
+Odpri aplikacijo v brskalniku: 
+        http://127.0.0.1:5000
 
 
 Struktura projekta
-Meme_generator/
-│
-├── app.py              
-├── Dockerfile          
-├── requirements.txt    
-├── templates/          
-├── static/             
-└── README.md           
+    Meme_generator/
+    │
+    ├── app.py              
+    ├── Dockerfile          
+    ├── requirements.txt    
+    ├── templates/          
+    ├── static/             
+    └── README.md           
