@@ -6,6 +6,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return render_template('index.html')
+
 @app.route('/generate-meme', methods=['POST'])
 def generate_meme():
     upper_text = request.form.get('upper_text', '')
@@ -13,20 +14,20 @@ def generate_meme():
     image_file = request.files.get('image')
 
     if image_file:
+        # Save uploaded image
         image_path = f"static/uploads/{image_file.filename}"
         image_file.save(image_path)
         image = Image.open(image_path)
         draw = ImageDraw.Draw(image)
 
-        # Make text bigger: increase divisor to smaller number
-        font_size = max(40, image.width // 6)  # bigger font
+        font_size = max(20, image.width // 10)
         try:
-            font_path = "arial.ttf"
+            font_path = "arial.ttf"  
             font = ImageFont.truetype(font_path, size=font_size)
         except:
             font = ImageFont.load_default()
 
-        margin = 10
+        margin = 10  # horizontal margin
 
         def wrap_text(text, font, max_width):
             words = text.split()
@@ -54,18 +55,17 @@ def generate_meme():
                 text_height = bbox[3] - bbox[1]
                 x = (image.width - text_width) / 2
 
-                # Draw thicker outline for bigger text
-                outline_range = max(3, font_size // 20)
+                outline_range = 2
                 for dx in range(-outline_range, outline_range+1):
                     for dy in range(-outline_range, outline_range+1):
                         draw.text((x + dx, y + dy), line, font=font, fill="black")
 
                 draw.text((x, y), line, font=font, fill="white")
-                y += text_height + 10  # more spacing for bigger text
+                y += text_height + 5 
 
         draw_text(upper_text, start_y=10)
         bottom_lines = wrap_text(bottom_text, font, image.width)
-        total_bottom_height = sum(draw.textbbox((0, 0), line, font=font)[3] - draw.textbbox((0, 0), line, font=font)[1] + 10 for line in bottom_lines)
+        total_bottom_height = sum(draw.textbbox((0, 0), line, font=font)[3] - draw.textbbox((0, 0), line, font=font)[1] + 5 for line in bottom_lines)
         draw_text(bottom_text, start_y=image.height - total_bottom_height - 10)
 
         output_path = "static/memes/meme_result.jpg"
@@ -76,8 +76,6 @@ def generate_meme():
     return "No image uploaded."
 
 
-
-
 if __name__ == "__main__":
-     app.run(host="0.0.0.0", port=5000, debug=True)
+        app.run(host="0.0.0.0", port=5000, debug=True)
 
